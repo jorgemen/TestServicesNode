@@ -7,19 +7,19 @@ import org.openide.util.ChangeSupport;
  *
  * @author jor3
  */
-public class RefreshServicesListTrigger {
-    private static final ChangeSupport cs = new ChangeSupport(RefreshServicesListTrigger.class);
+public class PropertiesNotifier {
+    private static final ChangeSupport CS = new ChangeSupport(PropertiesNotifier.class);
     
     public static void addChangeListener(ChangeListener listener) {
-        cs.addChangeListener(listener);
+        CS.addChangeListener(listener);
     }
     
     public static void removeChangeListener(ChangeListener listener) {
-        cs.removeChangeListener(listener);
+        CS.removeChangeListener(listener);
     }
     
-    public static void trigger()  {
-        cs.fireChange();
+    public static void changed()  {
+        CS.fireChange();
     }
     
 

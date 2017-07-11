@@ -17,6 +17,7 @@ import org.openide.util.NbPreferences;
 import org.openide.util.actions.SystemAction;
 import org.openide.util.datatransfer.NewType;
 import tests.testservicesnode.connection.OSChildFactory;
+import tests.testservicesnode.connection.PropertiesNotifier;
 
 /**
  *
@@ -88,6 +89,7 @@ public class NewRootNode extends AbstractNode {
                         NbPreferences.forModule(NewRootNode.class).put("name", name);
                         NbPreferences.forModule(NewRootNode.class).put("user", login);
                         NbPreferences.forModule(NewRootNode.class).put("password", password);
+                        PropertiesNotifier.changed();
                     });
                     DialogDisplayer.getDefault().notify(nd);
                 }

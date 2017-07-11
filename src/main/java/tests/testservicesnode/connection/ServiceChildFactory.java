@@ -1,16 +1,11 @@
 package tests.testservicesnode.connection;
 
 import java.beans.IntrospectionException;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.event.ChangeListener;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
-import org.openide.nodes.NodeEvent;
-import org.openide.nodes.NodeListener;
-import org.openide.nodes.NodeMemberEvent;
-import org.openide.nodes.NodeReorderEvent;
 import org.openide.util.Exceptions;
 import org.openstack4j.api.OSClient;
 import org.openstack4j.api.OSClient.OSClientV2;
@@ -58,7 +53,7 @@ public class ServiceChildFactory extends ChildFactory.Detachable<Service>  {
     
     @Override
     protected boolean createKeys(List<Service> toPopulate) {
-        servicesList.addAll(toPopulate);
+        toPopulate.addAll(servicesList);
         return true;
     }
 
