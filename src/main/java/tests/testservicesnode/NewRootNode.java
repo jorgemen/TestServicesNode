@@ -23,8 +23,8 @@ import tests.testservicesnode.connection.PropertiesNotifier;
  *
  * @author jor
  */
-@ServicesTabNodeRegistration(displayName = "OpenStacks",
-        name = "OpenStacks", iconResource = "tests/testservicesnode/hpe.png")
+@ServicesTabNodeRegistration(displayName = "OpenStack",
+        name = "OpenStack", iconResource = "tests/testservicesnode/hpe.png")
 @NbBundle.Messages({"LBL_Connections=OpenStack"})
 public class NewRootNode extends AbstractNode {
 
@@ -44,7 +44,7 @@ public class NewRootNode extends AbstractNode {
 
     public NewRootNode() {
         super(Children.create(new OSChildFactory(), true));
-        setDisplayName("OpenStacks");
+        setDisplayName("OpenStack");
         setIconBaseWithExtension(ICON);
     }
     

@@ -7,25 +7,25 @@ import javax.swing.event.ChangeListener;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
-import org.openstack4j.api.OSClient;
 import org.openstack4j.api.OSClient.OSClientV2;
+import org.openstack4j.model.identity.v2.Access;
 import org.openstack4j.model.identity.v2.Service;
 
 /**
  *
  * @author jor3
  */
-public class ServiceChildFactory extends ChildFactory.Detachable<Service>  {
+public class ServiceChildFactory extends ChildFactory.Detachable<Access.Service>  {
 
-    private OSClient client;
+    private OSClientV2 client;
     private ChangeListener listener;
-    private List<Service> servicesList;
+    private List<Access.Service> servicesList;
 
-    public ServiceChildFactory(OSClient client) {
+    public ServiceChildFactory(OSClientV2 client) {
         this.client = client;
         servicesList = new ArrayList<>();
         
-        servicesList.addAll(((OSClientV2)client).identity().services().list());
+        servicesList.addAll(client.getAccess().getServiceCatalog());        
         
     }
 
@@ -52,13 +52,13 @@ public class ServiceChildFactory extends ChildFactory.Detachable<Service>  {
     
     
     @Override
-    protected boolean createKeys(List<Service> toPopulate) {
+    protected boolean createKeys(List<Access.Service> toPopulate) {
         toPopulate.addAll(servicesList);
         return true;
     }
 
     @Override
-    protected Node createNodeForKey(Service key) {
+    protected Node createNodeForKey(Access.Service key) {
         ServiceNode node = null; 
         try {
             node = new ServiceNode(key);            

@@ -9,6 +9,7 @@ import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
 import org.openstack4j.api.OSClient;
+import org.openstack4j.api.OSClient.OSClientV2;
 
 /**
  *
@@ -16,14 +17,14 @@ import org.openstack4j.api.OSClient;
  */
 public class OSNode extends AbstractNode {
 
-    private OSClient client;
+    private OSClientV2 client;
     private String name;
 
-    public OSNode(OSClient client, String name) {
+    public OSNode(OSClientV2 client, String name) {
         this(client, name, new InstanceContent());
     }
 
-    public OSNode(OSClient client, String name, InstanceContent content) {
+    public OSNode(OSClientV2 client, String name, InstanceContent content) {
         super(Children.create(
                 new ServiceChildFactory(client), true), new AbstractLookup(content));
         this.client = client;
