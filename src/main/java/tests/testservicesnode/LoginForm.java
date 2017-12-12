@@ -1,6 +1,6 @@
 package tests.testservicesnode;
 
-import javax.swing.JTextField;
+import org.openide.util.NbPreferences;
 
 /**
  *
@@ -13,7 +13,8 @@ public class LoginForm extends javax.swing.JPanel {
      */
     public LoginForm() {
         initComponents();
-    }
+        setInitialValues();
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,14 +41,34 @@ public class LoginForm extends javax.swing.JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(LoginForm.class, "LoginForm.jLabel3.text")); // NOI18N
 
         name.setText(org.openide.util.NbBundle.getMessage(LoginForm.class, "LoginForm.name.text")); // NOI18N
+        name.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nameFocusLostHandler(evt);
+            }
+        });
 
         userName.setText(org.openide.util.NbBundle.getMessage(LoginForm.class, "LoginForm.userName.text")); // NOI18N
+        userName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                userNameFocusLost(evt);
+            }
+        });
 
         userPassword.setText(org.openide.util.NbBundle.getMessage(LoginForm.class, "LoginForm.userPassword.text")); // NOI18N
+        userPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                userPasswordFocusLost(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(LoginForm.class, "LoginForm.jLabel4.text")); // NOI18N
 
         urlPrefix.setText(org.openide.util.NbBundle.getMessage(LoginForm.class, "LoginForm.urlPrefix.text")); // NOI18N
+        urlPrefix.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                urlPrefixFocusLost(evt);
+            }
+        });
         urlPrefix.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 urlPrefixActionPerformed(evt);
@@ -100,6 +121,30 @@ public class LoginForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_urlPrefixActionPerformed
 
+    private void nameFocusLostHandler(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nameFocusLostHandler
+        if(name.getText()!=null && !name.getText().isEmpty()) {
+            NbPreferences.forModule(LoginForm.class).put("name", name.getText());
+        }
+    }//GEN-LAST:event_nameFocusLostHandler
+
+    private void urlPrefixFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_urlPrefixFocusLost
+        if(urlPrefix.getText()!=null && !urlPrefix.getText().isEmpty()) {
+            NbPreferences.forModule(LoginForm.class).put("urlPrefix", urlPrefix.getText());
+        }
+    }//GEN-LAST:event_urlPrefixFocusLost
+
+    private void userNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userNameFocusLost
+        if(userName.getText()!=null && !userName.getText().isEmpty()) {
+            NbPreferences.forModule(LoginForm.class).put("userName", userName.getText());
+        }
+    }//GEN-LAST:event_userNameFocusLost
+
+    private void userPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_userPasswordFocusLost
+        if(userPassword.getText()!=null && !userPassword.getText().isEmpty()) {
+            NbPreferences.forModule(LoginForm.class).put("userPassword", userPassword.getText());
+        }
+    }//GEN-LAST:event_userPasswordFocusLost
+
     public String getName() {
         return name.getText();
     }
@@ -127,4 +172,27 @@ public class LoginForm extends javax.swing.JPanel {
     private javax.swing.JTextField userName;
     private javax.swing.JTextField userPassword;
     // End of variables declaration//GEN-END:variables
+
+    private void setInitialValues() {
+        String _name;
+        if( (_name = NbPreferences.forModule(LoginForm.class).get("name", "-- OpenStack name --")) != null) {
+           name.setText(_name);
+        }
+        
+        String _urlPrefix;
+        if( (_urlPrefix = NbPreferences.forModule(LoginForm.class).get("urlPrefix", "-- Keystone url --")) != null) {
+           urlPrefix.setText(_urlPrefix);
+        }
+        
+        String _userName;
+        if( (_userName = NbPreferences.forModule(LoginForm.class).get("userName", "-- username --")) != null) {
+           userName.setText(_userName);
+        }
+        
+        String _userPassword;
+        if( (_userPassword = NbPreferences.forModule(LoginForm.class).get("userPassword", "-- password --")) != null) {
+           userPassword.setText(_userPassword);
+        }
+
+    }
 }

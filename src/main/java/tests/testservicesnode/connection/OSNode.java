@@ -1,37 +1,34 @@
 package tests.testservicesnode.connection;
 
+import java.beans.IntrospectionException;
 import javax.swing.Action;
 import org.openide.actions.NewAction;
 import org.openide.actions.OpenLocalExplorerAction;
-import org.openide.nodes.AbstractNode;
+import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
 import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
-import org.openstack4j.api.OSClient;
-import org.openstack4j.api.OSClient.OSClientV2;
 
 /**
  *
  * @author jor3
  */
-public class OSNode extends AbstractNode {
+public class OSNode extends BeanNode<OSNodeData> {
 
-    private OSClientV2 client;
-    private String name;
 
-    public OSNode(OSClientV2 client, String name) {
-        this(client, name, new InstanceContent());
+    private final OSNodeData nodeData;
+
+    public OSNode(OSNodeData bean) throws IntrospectionException {
+        this(bean, new InstanceContent());
     }
 
-    public OSNode(OSClientV2 client, String name, InstanceContent content) {
-        super(Children.create(
-                new ServiceChildFactory(client), true), new AbstractLookup(content));
-        this.client = client;
-        this.name = name;
+    public OSNode(OSNodeData bean, InstanceContent content) throws IntrospectionException {
+        super(bean, Children.create(new ServiceChildFactory(bean.getClient()), true), new AbstractLookup(content));
+        content.add(bean);
         content.add(this);
-        content.add(client);
-        setDisplayName(name);
+        this.nodeData = bean;        
+        setDisplayName(bean.getNodeName());
 
     }
 
@@ -43,9 +40,10 @@ public class OSNode extends AbstractNode {
     }
 
     @Override
-    public boolean canRename() {
-        return true;
+    public String getDisplayName() {
+        return nodeData.getNodeName();
     }
 
+    
     
 }

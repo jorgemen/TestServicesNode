@@ -91,6 +91,9 @@
           <ResourceString bundle="tests/testservicesnode/Bundle.properties" key="LoginForm.name.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="nameFocusLostHandler"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="userName">
       <Properties>
@@ -98,6 +101,9 @@
           <ResourceString bundle="tests/testservicesnode/Bundle.properties" key="LoginForm.userName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="userNameFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="userPassword">
       <Properties>
@@ -105,6 +111,9 @@
           <ResourceString bundle="tests/testservicesnode/Bundle.properties" key="LoginForm.userPassword.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="userPasswordFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
@@ -120,6 +129,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="urlPrefixFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="urlPrefixActionPerformed"/>
       </Events>
     </Component>

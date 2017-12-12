@@ -1,5 +1,6 @@
 package tests.testservicesnode.connection;
 
+import java.beans.IntrospectionException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -8,9 +9,9 @@ import javax.swing.event.ChangeListener;
 import org.openide.awt.StatusDisplayer;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
+import org.openide.util.Exceptions;
 import org.openide.util.NbPreferences;
 import org.openide.util.RequestProcessor;
-import org.openstack4j.api.OSClient;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.api.exceptions.AuthenticationException;
 import org.openstack4j.api.exceptions.ConnectionException;
@@ -24,7 +25,8 @@ import tests.testservicesnode.NewRootNode;
 public class OSChildFactory extends ChildFactory.Detachable<OSClientV2> {
 
     private final List<OSClientV2> clients;
-    private String name;
+    private OSNodeData nodeData;
+
     private ChangeListener listener;
 
     public OSChildFactory() {
@@ -39,7 +41,12 @@ public class OSChildFactory extends ChildFactory.Detachable<OSClientV2> {
 
     @Override
     protected Node createNodeForKey(OSClientV2 osClient) {
-        return new OSNode(osClient, name);
+        try {
+            return new OSNode(nodeData);
+        } catch (IntrospectionException ex) {
+            Exceptions.printStackTrace(ex);
+            return Node.EMPTY;
+        }
     }
 
     @Override
@@ -51,13 +58,17 @@ public class OSChildFactory extends ChildFactory.Detachable<OSClientV2> {
                     String urlPrefix = NbPreferences.forModule(NewRootNode.class).get("url", "openstack");
                     String user = NbPreferences.forModule(NewRootNode.class).get("user", "error");
                     String password = NbPreferences.forModule(NewRootNode.class).get("password", "error");
+                    String name = NbPreferences.forModule(NewRootNode.class).get("name", "Default");
                     OSClientV2 os = OSFactory.builderV2()
                             .endpoint(urlPrefix)
                             .credentials(user, password)
                             .tenantName("admin")
                             .authenticate();
-                    clients.add(os);
-                    name = NbPreferences.forModule(NewRootNode.class).get("name", "Default");
+                    if(!clients.contains(os))
+                        clients.add(os);
+
+                    nodeData = new OSNodeData(os, name,
+                            urlPrefix, user, password);
                     refresh(true);
                     StatusDisplayer.getDefault().setStatusText("new openstack");
                 } catch (ConnectionException | AuthenticationException ae) {
