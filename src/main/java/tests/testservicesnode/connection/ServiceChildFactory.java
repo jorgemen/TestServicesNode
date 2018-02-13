@@ -9,7 +9,6 @@ import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.model.identity.v2.Access;
-import org.openstack4j.model.identity.v2.Service;
 
 /**
  *
