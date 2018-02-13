@@ -2,6 +2,7 @@ package tests.testservicesnode.connection;
 
 import java.beans.IntrospectionException;
 import javax.swing.Action;
+import org.netbeans.api.annotations.common.StaticResource;
 import org.openide.actions.NewAction;
 import org.openide.actions.OpenLocalExplorerAction;
 import org.openide.nodes.BeanNode;
@@ -16,6 +17,9 @@ import org.openide.util.lookup.InstanceContent;
  */
 public class OSNode extends BeanNode<OSNodeData> {
 
+    
+    @StaticResource
+    private static final String ICON = "tests/testservicesnode/openstack.png";
 
     private final OSNodeData nodeData;
 
@@ -28,6 +32,7 @@ public class OSNode extends BeanNode<OSNodeData> {
         content.add(bean);
         content.add(this);
         this.nodeData = bean;        
+        setIconBaseWithExtension(ICON);
         setDisplayName(bean.getNodeName());
 
     }
@@ -39,6 +44,8 @@ public class OSNode extends BeanNode<OSNodeData> {
             SystemAction.get(OpenLocalExplorerAction.class),};
     }
 
+    
+    
     @Override
     public String getDisplayName() {
         return nodeData.getNodeName();

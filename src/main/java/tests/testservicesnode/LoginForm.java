@@ -145,6 +145,7 @@ public class LoginForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_userPasswordFocusLost
 
+    @Override
     public String getName() {
         return name.getText();
     }

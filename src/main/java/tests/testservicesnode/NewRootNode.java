@@ -1,6 +1,5 @@
 package tests.testservicesnode;
 
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.Action;
@@ -32,22 +31,22 @@ public class NewRootNode extends AbstractNode {
     private String name;
     private String login;
     private String password;
-    
+
     private static final NewRootNode DEFAULT = new NewRootNode();
-            
+
     @StaticResource
     private static final String ICON = "tests/testservicesnode/hpe.png";
-    
+
     public static NewRootNode getDefault() {
         return DEFAULT;
     }
 
     public NewRootNode() {
         super(Children.create(new OSChildFactory(), true));
-        setDisplayName("OpenStack");
+        updateDisplayName("OpenStack");
         setIconBaseWithExtension(ICON);
     }
-    
+
     @Override
     public Action getPreferredAction() {
         return SystemAction.get(NewAction.class);
@@ -63,12 +62,13 @@ public class NewRootNode extends AbstractNode {
         "LBL_Text=Enter Name:"})
     @Override
     public NewType[] getNewTypes() {
-       return new NewType[]{
+        return new NewType[]{
             new NewType() {
                 @Override
                 public String getName() {
                     return Bundle.LBL_Title();
                 }
+
                 @Override
                 public void create() throws IOException {
                     final LoginForm form = new LoginForm();
@@ -96,5 +96,9 @@ public class NewRootNode extends AbstractNode {
             }
         };
     }
-    
+
+    private void updateDisplayName(String name) {
+        setDisplayName(name);
+    }
+
 }
